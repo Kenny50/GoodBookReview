@@ -1,28 +1,21 @@
 package com.goodideas.goodbookreview.presentation
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.goodideas.goodbookreview.R
 import com.goodideas.goodbookreview.util.ViewEvent
 import timber.log.Timber
 
-abstract class BaseFragment<out T : ViewBinding> : Fragment() {
+abstract class BaseFragment<out T : ViewBinding>(): Fragment() {
     private var _binding: ViewBinding? = null
-
     @Suppress("UNCHECKED_CAST")
     protected val binding: T
         get() = _binding as T
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = bindingInflater(inflater)
         return _binding!!.root
     }
@@ -39,34 +32,22 @@ abstract class BaseFragment<out T : ViewBinding> : Fragment() {
 
     abstract fun setUi()
 
-    protected abstract val bindingInflater: (LayoutInflater) -> ViewBinding
+    protected abstract val bindingInflater:(LayoutInflater) -> ViewBinding
 
-    private val loadingDialog by lazy {
-        Dialog(requireContext()).apply {
-            setContentView(R.layout.dialog_loading)
-            setCanceledOnTouchOutside(false)
-        }
-    }
-
-
-    protected fun handleViewEvent(event: ViewEvent) {
-        when (event) {
-            ViewEvent.STARTED -> {
+    protected fun handleViewEvent(event:ViewEvent){
+        when(event) {
+            ViewEvent.STARTED ->{
                 Timber.d("start")
             }
             ViewEvent.FAIL -> {
-                loadingDialog.hide()
                 Timber.d("fail")
             }
             ViewEvent.FINISH -> {
-                loadingDialog.hide()
                 Timber.d("finish")
             }
             ViewEvent.LOADING -> {
-                loadingDialog.show()
                 Timber.d("loading")
             }
         }
     }
-
 }

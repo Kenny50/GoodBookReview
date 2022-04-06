@@ -9,11 +9,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.goodideas.goodbookreview.databinding.FragmentLoginBinding
 import com.goodideas.goodbookreview.presentation.BaseFragment
-import com.goodideas.goodbookreview.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
@@ -30,34 +28,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     override fun setUi() {
         binding.registerButton.setOnClickListener {
-            login()
+            Toast.makeText(requireContext(), " click", Toast.LENGTH_SHORT).show()
+            viewModel.callJson()
         }
     }
 
-    private fun login() {
-        lifecycleScope.launch {
-            viewModel.login(
-                binding.emailText.editText?.text.toString(),
-                binding.passwordText.editText?.text.toString()
-            ).collect {
-                confirmLoginState(it)
-            }
-        }
-    }
-
-    private fun <T> confirmLoginState(resource: Resource<T>) {
-        when (resource) {
-            is Resource.Loading -> {}
-            is Resource.Success -> {
-                Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show()
-            }
-            is Resource.Error -> {
-                Toast.makeText(requireContext(), "fail", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun handleViewFlow() {
+    private fun handleViewFlow(){
         viewModel.receiveChannelAsFlow.onEach {
             handleViewEvent(it)
         }.launchIn(lifecycleScope)
