@@ -1,8 +1,8 @@
 package com.goodideas.goodbookreview.di
 
-import com.goodideas.goodbookreview.domain.GoodReviewApi
+import com.goodideas.goodbookreview.data.remote.GoodReviewApi
+import com.goodideas.goodbookreview.data.repository.GoodReviewRepositoryImpl
 import com.goodideas.goodbookreview.domain.repository.GoodReviewRepository
-import com.goodideas.goodbookreview.domain.repository.GoodReviewRepositoryImpl
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -34,7 +34,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRepository(api:GoodReviewApi): GoodReviewRepository {
+    fun provideRepository(api: GoodReviewApi): GoodReviewRepository {
         return GoodReviewRepositoryImpl(api)
     }
 }

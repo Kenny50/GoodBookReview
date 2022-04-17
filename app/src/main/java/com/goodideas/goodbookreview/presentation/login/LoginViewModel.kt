@@ -10,9 +10,13 @@ class LoginViewModel @Inject constructor(
     private val repo:GoodReviewRepository
 ):BaseViewModel() {
 
-    fun callJson(){
+    fun callJson() {
         apiCall {
-            //repo.logout()
+            repo.register("", "")
         }
+    }
+
+    private fun verifyEmailFormat(s: String) {
+
     }
 }
