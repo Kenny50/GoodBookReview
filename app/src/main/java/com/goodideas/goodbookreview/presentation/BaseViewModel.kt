@@ -2,7 +2,6 @@ package com.goodideas.goodbookreview.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.goodideas.goodbookreview.util.Resource
 import com.goodideas.goodbookreview.util.ViewEvent
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -32,7 +31,7 @@ open class BaseViewModel:ViewModel() {
         }
     }
 
-    protected fun <T> Flow<Resource<T>>.addViewEventTracker() =
+    protected fun <T> Flow<T>.addViewEventTracker() =
         this.onStart {
             channel.send(ViewEvent.LOADING)
         }.catch {
@@ -41,6 +40,9 @@ open class BaseViewModel:ViewModel() {
             channel.send(ViewEvent.FINISH)
         }
 
-
+    override fun onCleared() {
+        super.onCleared()
+        channel.close()
+    }
 
 }
