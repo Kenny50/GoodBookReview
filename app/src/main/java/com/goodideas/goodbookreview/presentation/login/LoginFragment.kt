@@ -29,7 +29,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override fun setUi() {
         binding.registerButton.setOnClickListener {
             Toast.makeText(requireContext(), " click", Toast.LENGTH_SHORT).show()
-            viewModel.callJson()
+            viewModel.callJson("","")
         }
     }
 

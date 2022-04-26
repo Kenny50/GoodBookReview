@@ -2,10 +2,11 @@ package com.goodideas.goodbookreview.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.goodideas.goodbookreview.util.Resource
 import com.goodideas.goodbookreview.util.ViewEvent
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.concurrent.CancellationException
 
@@ -30,5 +31,16 @@ open class BaseViewModel:ViewModel() {
             apiCallWithViewEvent(block)
         }
     }
+
+    protected fun <T> Flow<Resource<T>>.addViewEventTracker() =
+        this.onStart {
+            channel.send(ViewEvent.LOADING)
+        }.catch {
+            channel.send(ViewEvent.FAIL)
+        }.onCompletion {
+            channel.send(ViewEvent.FINISH)
+        }
+
+
 
 }
