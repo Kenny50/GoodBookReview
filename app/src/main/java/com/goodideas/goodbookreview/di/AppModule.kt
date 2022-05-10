@@ -1,5 +1,6 @@
 package com.goodideas.goodbookreview.di
 
+import com.goodideas.goodbookreview.BuildConfig
 import com.goodideas.goodbookreview.data.remote.GoodReviewApi
 import com.goodideas.goodbookreview.data.repository.GoodReviewRepositoryImpl
 import com.goodideas.goodbookreview.domain.repository.GoodReviewRepository
@@ -26,7 +27,7 @@ object AppModule {
             .create()
 
         return Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .baseUrl(BuildConfig.BASEURL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(GoodReviewApi::class.java)
