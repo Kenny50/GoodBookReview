@@ -6,8 +6,8 @@ import javax.inject.Inject
 class LoginUseCase @Inject constructor(
     private val repo:GoodReviewRepository
 ) {
-    suspend operator fun invoke(account:String, password:String){
-        return repo.login(account, password)
+    suspend operator fun invoke(account: String, password: String) {
+        return // TODO:
     }
 
 }
