@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="progress_colors">
+        <item>@color/black</item>
+        <item>@color/design_default_color_error</item>
+        <item>@color/cardview_light_background</item>
+    </integer-array>
+</resources>

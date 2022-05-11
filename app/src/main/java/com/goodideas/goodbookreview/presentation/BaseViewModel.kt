@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.goodideas.goodbookreview.util.ViewEvent
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -14,14 +15,22 @@ open class BaseViewModel:ViewModel() {
     private val channel = Channel<ViewEvent>()
     val receiveChannelAsFlow = channel.consumeAsFlow()
 
-    private suspend fun apiCallWithViewEvent(block:suspend () -> Unit){
+    init {
+        viewModelScope.launch {
+            channel.send(ViewEvent.LOADING)
+            delay(3000)
+            channel.send(ViewEvent.FINISH)
+        }
+    }
+
+    private suspend fun apiCallWithViewEvent(block: suspend () -> Unit) {
         channel.send(ViewEvent.LOADING)
         try {
             block.invoke()
             channel.send(ViewEvent.FINISH)
-        } catch (cancelException: CancellationException){
+        } catch (cancelException: CancellationException) {
             throw cancelException
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             channel.send(ViewEvent.FAIL)
         }
     }
