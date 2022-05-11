@@ -76,7 +76,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="register"
+        android:text="Login"
         app:layout_constraintTop_toBottomOf="@id/password_text"
         app:layout_constraintStart_toStartOf="@id/password_text"
         app:layout_constraintEnd_toEndOf="@id/password_text"
