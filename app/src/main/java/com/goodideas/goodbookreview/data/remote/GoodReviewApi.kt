@@ -1,6 +1,7 @@
 package com.goodideas.goodbookreview.data.remote
 
 import com.goodideas.goodbookreview.data.remote.dto.*
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -8,10 +9,14 @@ import retrofit2.http.POST
 interface GoodReviewApi {
 
     @POST("auth/register")
-    suspend fun register(registerDto: RegisterDto): UserStateDto
+    suspend fun register(
+        @Body registerDto: RegisterDto
+    ): UserStateDto
 
     @POST("auth/login")
-    suspend fun login(loginDto: LoginDto): LoginResponseDto
+    suspend fun login(
+        @Body loginDto: LoginDto
+    ): LoginResponseDto
 
     @POST("auth/logout")
     suspend fun logout(

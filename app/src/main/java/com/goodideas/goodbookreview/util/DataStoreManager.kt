@@ -22,8 +22,8 @@ class DataStoreManager @Inject constructor(
         }
     }
 
-    suspend fun read(key: String) {
-        return dataStore.data.first().let { it[stringPreferencesKey(key)] }
+    suspend fun read(key: String): String {
+        return dataStore.data.first().let { it[stringPreferencesKey(key)].toString() }
     }
 
     suspend fun clear(key: String) {

@@ -7,6 +7,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.concurrent.CancellationException
 
 open class BaseViewModel:ViewModel() {
@@ -34,7 +35,8 @@ open class BaseViewModel:ViewModel() {
     protected fun <T> Flow<T>.addViewEventTracker() =
         this.onStart {
             channel.send(ViewEvent.LOADING)
-        }.catch {
+        }.catch { error ->
+            Timber.e(error)
             channel.send(ViewEvent.FAIL)
         }.onCompletion {
             channel.send(ViewEvent.FINISH)
